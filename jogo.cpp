@@ -19,6 +19,13 @@ int estado = 0;
 void tocarMusicaDeEspera(){
 	
 }
+void tocarEscolha(int entradaDaJogada){
+  if(entradaDaJogada == 2){
+	AcenderledVermelho();
+  }else if(entradaDaJogada == 1){
+  	AcenderledVerde();
+  }
+};
 void AcenderledVermelho(){
 	digitalWrite(ledVermelho,HIGH);
   	tone(buzzer,262);
@@ -60,11 +67,17 @@ void resetou(){
 }
 
 int lerEntrada(){
-	int clicouSim = !digitalRead(verdade);
-  	int clicouNao = !digitalRead(mentira);
-  if(clicouSim)return 1;
-  if(clicouNao)return 2;
-  return 0;
+  while(true){
+    int clicouSim = !digitalRead(verdade);
+    int clicouNao = !digitalRead(mentira);
+    int clicouReset = !digitalRead(resetar);
+    if(clicouSim)return 1;
+    if(clicouNao)return 2;
+    if(clicouReset){
+      estado = 0;
+      return 0;  
+    }
+  }
 }
 
 
@@ -85,8 +98,8 @@ int jogada = 0;
 int ponteiroVerJogada=0;
 void loop()
 {
-	
   if(estado == 0){
+    resetarVer = false;
     lcd_1.setCursor(0, 0);
   	lcd_1.print("Jogo Sabedoria");
     lcd_1.setCursor(0, 1);
@@ -108,16 +121,50 @@ void loop()
           }else{
             AcenderledVerde();
           }
+      }else{
+      	estado = 0;
+        break;
       }
     }
-   	estado == 2; 
+   	if(!resetarVer)estado = 2; 
   }else if(estado == 2){
+    lcd_1.setCursor(0, 0);
+  	lcd_1.print("Click em sequencia");
+    lcd_1.setCursor(0, 1);
+    lcd_1.print("");
+    if(resetarVer){
+    	estado = 0;
+    }
     int jogadaAtual = 0;
     int entradaDaJogada= lerEntrada();
   	if(entradaDaJogada) jogadaAtual=entradaDaJogada;
     if(aleatorio[jogada%4][ponteiroVerJogada]==jogadaAtual){
       ponteiroVerJogada++;
+      lcd_1.setCursor(0, 1);
+      lcd_1.clear();
+      lcd_1.print("Correto");
+    }else{
+      lcd_1.setCursor(0, 1);
+      lcd_1.print("Incorreto");
+      delay(4000);
+      lcd_1.setCursor(0, 1);
+      lcd_1.clear();
+      lcd_1.setCursor(0, 1);
+      lcd_1.print("Voltando ao inicio");
+      delay(1000);
+      estado = 0;
     }
+    tocarEscolha(entradaDaJogada);
+    if(ponteiro == 6){
+    	estado = 3;
+    }
+  }
+  else if(estado ==3){
+    lcd_1.clear();
+    lcd_1.setCursor(0, 0);
+  	lcd_1.print("Parabens voce");
+    lcd_1.setCursor(0, 1);
+    lcd_1.print("Acertou a sequencia");
   }
   //lcd_1.setCursor(0, 1);
   // print the number of seconds since reset:
