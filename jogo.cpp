@@ -10,8 +10,12 @@ short aleatorio[4][6] = {
     {2, 1, 2, 2, 2, 1},
     {1, 1, 2, 2, 2, 2},
 };
-char * perguntas[] = {"Sexta tem feira?","Um float tem 64 bits?","Tem classe em C?"};
-short respostasPergunta[] = {1,2,2};
+char * perguntas[] = {"Sexta tem feira?",
+"Um float tem 64 bits?",
+"Tem classe em C?",
+"Tem classe em java?",
+"Tem gerenciador de pacote em C?",};
+short respostasPergunta[] = {1,2,2,1,2};
 
 void tocarMusicaDeEspera()
 {
@@ -146,13 +150,14 @@ int perguntarParaJogador(char* pergunta,int respostaCorreta,int x){
             if(resposta == 2)PrintarDuasLinhas(timer,"  SIM  OU *NAO",2000);
             if(resposta == respostaCorreta){
                 PrintarDuasLinhas("Parabens acertou!",(char *)numeroDaQuestao,2000);
-                return 1;
-            }else if(resposta != respostaCorreta && resposta != -1){
-                PrintarDuasLinhas("Voce errou !","Voltando ao inicio",2000);
                 return 0;
+            }else if(resposta != respostaCorreta && resposta != -1){
+                PrintarDuasLinhas("Voce errou !","Menos uma chance!",2000);
+                return -1;
             }
         } 
-    return 0;
+    PrintarDuasLinhas("Voce errou !","Menos uma chance!",2000);
+    return -1;
 }
 
 
@@ -250,10 +255,31 @@ void loop()
         estado = 5;
     }else if(estado == 5)
     {
-        for(short x = 0 ; x <3;x++){
-            perguntarParaJogador(perguntas[x],respostasPergunta[x],x);
+        short x = 0 ;
+        short vidas= 2;
+        bool perdeu = 0; 
+        while(x<5){
+            short respostaDaPergunta = perguntarParaJogador(perguntas[x],respostasPergunta[x],x+1);
+            if(vidas + respostaDaPergunta){
+                vidas+=respostaDaPergunta;
+                x++;
+            }else{
+                PrintarDuasLinhas("Voce perdeu !","Indo ao inicio!",2000);
+                perdeu =1;
+                break;
+            }
+        }
+        if(!perdeu){
+            PrintarDuasLinhas("Parabens voce ","passou!",3000);
+            PrintarDuasLinhas("Agora e a hora!","A pergunta final",3000);
+            PrintarDuasLinhas("Se prepare ","Essa e pesada!",3000);
+            estado =6;
+        }else{
+            estado = 0;
         }
         
+    }else if(estado == 6){
+
     }
     // lcd_1.setCursor(0, 1);
     //  print the number of seconds since reset:
