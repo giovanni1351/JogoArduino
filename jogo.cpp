@@ -16,10 +16,34 @@ char * perguntas[] = {"Sexta tem feira?",
 "Tem classe em java?",
 "Tem gerenciador de pacote em C?",};
 short respostasPergunta[] = {1,2,2,1,2};
-
+void delayMeu(int tempo){
+    int timer = tempo;
+    while (timer>0)
+    {
+        // int clicouSim = !digitalRead(verdade);
+        // int clicouNao = !digitalRead(mentira);
+        int clicouReset = !digitalRead(resetar);
+        // if (clicouSim){
+        //     AcenderledVerde();
+        //     return 1;
+        // }
+        // if (clicouNao){
+        //     AcenderledVermelho();
+        //     return 2;
+        // }
+        if (clicouReset)
+        {
+            estado = 0;
+            return;
+        }
+        delay(1);
+        timer--;
+    }
+}
 void tocarMusicaDeEspera()
 {
 }
+
 void tocarEscolha(int entradaDaJogada)
 {
     if (entradaDaJogada == 2)
@@ -35,18 +59,18 @@ void AcenderledVermelho()
 {
     digitalWrite(ledVermelho, HIGH);
     tone(buzzer, 262);
-    delay(300);
+    delayMeu(300);
     noTone(buzzer);
-    delay(700);
+    delayMeu(700);
     digitalWrite(ledVermelho, LOW);
 }
 void AcenderledVerde()
 {
     digitalWrite(ledVerde, HIGH);
     tone(buzzer, 330);
-    delay(300);
+    delayMeu(300);
     noTone(buzzer);
-    delay(700);
+    delayMeu(700);
     digitalWrite(ledVerde, LOW);
 }
 
@@ -60,11 +84,11 @@ void printarLongo(char *texto, int caracteres)
     lcd_1.clear();
     lcd_1.begin(16, 2);
     lcd_1.print(texto);
-    delay(2000);
+    delayMeu(2000);
     for (int positionCounter = 0; positionCounter < caracteres; positionCounter++)
     {
         lcd_1.scrollDisplayLeft();
-        delay(150);
+        delayMeu(150);
     }
 }
 void printar(char *texto, int caracteres, int lugar)
@@ -77,16 +101,16 @@ void printar(char *texto, int caracteres, int lugar)
         // scroll one position left:
         lcd_1.scrollDisplayLeft();
         // wait a bit:
-        delay(150);
+        delayMeu(150);
     }
 }
-void PrintarDuasLinhas(char *textoCima,char *textoBaixo,int Timerdelay){
+void PrintarDuasLinhas(char *textoCima,char *textoBaixo,int TimerdelayMeu){
     lcd_1.clear();
     lcd_1.setCursor(0, 0);
     lcd_1.print(textoCima);
     lcd_1.setCursor(0, 1);
     lcd_1.print(textoBaixo);
-    delay(Timerdelay);
+    delayMeu(TimerdelayMeu);
 }
 
 void respondeuIncorreto()
@@ -123,27 +147,38 @@ int lerEntradaPergunta()
         int clicouSim = !digitalRead(verdade);
         int clicouNao = !digitalRead(mentira);
         int clicouReset = !digitalRead(resetar);
-        if (clicouSim)
+        if (clicouSim){
+            AcenderledVerde();
             return 1;
-        if (clicouNao)
+        }
+        if (clicouNao){
+            AcenderledVermelho();
             return 2;
-        // if (clicouReset)
-        // {
-        //     estado = 0;
-        //     return 0;
-        // }
-        delay(1);
+        }
+        if (clicouReset)
+        {
+            estado = 0;
+            return 0;
+        }
+        delayMeu(1);
         timer--;
     }
     return -1;
 }
-int perguntarParaJogador(char* pergunta,int respostaCorreta,int x){
+
+
+int perguntarParaJogador(char* pergunta,int respostaCorreta,int x,bool final){
     
         char timer[30],numeroDaQuestao[30];
         printarLongo(pergunta,10);
         for(int y = 10 ; y> 0;y--){
             sprintf(timer,"  TIMER %d",y);
-            sprintf(numeroDaQuestao,"Questao %d de 5",x);
+            if(!final){
+                sprintf(numeroDaQuestao,"Questao %d de 5",x);
+            }
+            else{
+                sprintf(numeroDaQuestao,"Questao final!",x);
+            }
             PrintarDuasLinhas(timer,"  SIM  OU  NAO",0);
             int resposta = lerEntradaPergunta();
             if(resposta == 1)PrintarDuasLinhas(timer," *SIM  OU  NAO",2000);
@@ -172,6 +207,7 @@ void setup()
     pinMode(resetar, INPUT_PULLUP);
     pinMode(buzzer, OUTPUT);
     attachInterrupt(digitalPinToInterrupt(resetar), resetou, FALLING);
+    randomSeed(analogRead(0));
 
     // Print a message to the LCD.
     Serial.begin(9600);
@@ -197,7 +233,7 @@ void loop()
     else if (estado == 1)
     {
         printarLongo("Jogo da memoria", 4);
-        delay(1000);
+        delayMeu(1000);
         // lcd_1.setCursor(0, 0);
         // lcd_1.print("Jogo da memoria");
         // lcd_1.setCursor(0, 1);
@@ -259,7 +295,7 @@ void loop()
         short vidas= 2;
         bool perdeu = 0; 
         while(x<5){
-            short respostaDaPergunta = perguntarParaJogador(perguntas[x],respostasPergunta[x],x+1);
+            short respostaDaPergunta = perguntarParaJogador(perguntas[x],respostasPergunta[x],x+1,false);
             if(vidas + respostaDaPergunta){
                 vidas+=respostaDaPergunta;
                 x++;
@@ -279,11 +315,19 @@ void loop()
         }
         
     }else if(estado == 6){
-
+        short respostaDaPergunta = perguntarParaJogador("O cr7 é o goat",2,1,true);
+        if(respostaDaPergunta==0){
+            PrintarDuasLinhas("Voce eh o cara ","todo mundo sabe",3000);
+            PrintarDuasLinhas("que o messi eh o ","     GOAT!!!   ",3000);
+        }else{
+            PrintarDuasLinhas("Nãoooooooooo ","Voce errou!",3000);
+            PrintarDuasLinhas("Perdeu o jogo! ","MESSI EH O GOAT",3000);
+        }
+        estado=0;
     }
     // lcd_1.setCursor(0, 1);
     //  print the number of seconds since reset:
     // lcd_1.print(seconds);
-    //delay(1000); // Wait for 1000 millisecond(s)
+    //delayMeu(1000); // Wait for 1000 millisecond(s)
                  // seconds += 1;
 }
