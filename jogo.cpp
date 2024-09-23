@@ -16,23 +16,12 @@ char * perguntas[] = {"Sexta tem feira?",
 "Tem classe em java?",
 "Tem gerenciador de pacote em C?",};
 short respostasPergunta[] = {1,2,2,1,2};
+int perguntasEscolhidas[5];
 void delayMeu(int tempo){
     int timer = tempo;
-    while (timer>0)
-    {
-        // int clicouSim = !digitalRead(verdade);
-        // int clicouNao = !digitalRead(mentira);
+    while (timer>0){
         int clicouReset = !digitalRead(resetar);
-        // if (clicouSim){
-        //     AcenderledVerde();
-        //     return 1;
-        // }
-        // if (clicouNao){
-        //     AcenderledVermelho();
-        //     return 2;
-        // }
-        if (clicouReset)
-        {
+        if (clicouReset){
             estado = 0;
             return;
         }
@@ -43,7 +32,23 @@ void delayMeu(int tempo){
 void tocarMusicaDeEspera()
 {
 }
-
+bool ExisteNaArray(int atual,int valor){
+    for(int x = 0 ;x < atual;x++){
+        if(valor == perguntasEscolhidas[x]){
+            return true;
+        }
+    }
+    return false;
+}
+void gerarSequencia(int quantidadeDeQuestao){
+    for(int x=0; x < 5;x++){
+        int sorteado = random(quantidadeDeQuestao);
+        while(ExisteNaArray(x,sorteado)){
+            sorteado = random(quantidadeDeQuestao);
+        }
+        perguntasEscolhidas[x] = sorteado;
+    }
+}
 void tocarEscolha(int entradaDaJogada)
 {
     if (entradaDaJogada == 2)
@@ -61,7 +66,7 @@ void AcenderledVermelho()
     tone(buzzer, 262);
     delayMeu(300);
     noTone(buzzer);
-    delayMeu(700);
+    delayMeu(200);
     digitalWrite(ledVermelho, LOW);
 }
 void AcenderledVerde()
@@ -70,7 +75,7 @@ void AcenderledVerde()
     tone(buzzer, 330);
     delayMeu(300);
     noTone(buzzer);
-    delayMeu(700);
+    delayMeu(200);
     digitalWrite(ledVerde, LOW);
 }
 
@@ -219,6 +224,8 @@ void loop()
     if (estado == 0)
     {
         resetarVer = false;
+        jogada = random(4);
+        gerarSequencia(5);
         lcd_1.clear();
         lcd_1.setCursor(0, 0);
         lcd_1.print("Jogo Sabedoria");
@@ -272,7 +279,7 @@ void loop()
         else{estado = 0;resetarVer = 1;}
         if (aleatorio[jogada % 4][ponteiroVerJogada] == jogadaAtual){
             ponteiroVerJogada++;
-            PrintarDuasLinhas("","Correto",0);
+            PrintarDuasLinhas("","Correto",150);
         }
         else respondeuIncorreto();
         if (ponteiroVerJogada == 6)estado = 3;
@@ -295,7 +302,7 @@ void loop()
         short vidas= 2;
         bool perdeu = 0; 
         while(x<5){
-            short respostaDaPergunta = perguntarParaJogador(perguntas[x],respostasPergunta[x],x+1,false);
+            short respostaDaPergunta = perguntarParaJogador(perguntas[perguntasEscolhidas[x]],respostasPergunta[perguntasEscolhidas[x]],x+1,false);
             if(vidas + respostaDaPergunta){
                 vidas+=respostaDaPergunta;
                 x++;
@@ -320,7 +327,7 @@ void loop()
             PrintarDuasLinhas("Voce eh o cara ","todo mundo sabe",3000);
             PrintarDuasLinhas("que o messi eh o ","     GOAT!!!   ",3000);
         }else{
-            PrintarDuasLinhas("Nãoooooooooo ","Voce errou!",3000);
+            PrintarDuasLinhas("Naoooooooooo ","Voce errou!",3000);
             PrintarDuasLinhas("Perdeu o jogo! ","MESSI EH O GOAT",3000);
         }
         estado=0;
