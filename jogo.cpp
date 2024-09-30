@@ -42,7 +42,30 @@ void delayMeu(int tempo){
 }
 void tocarMusicaDeEspera()
 {
-
+    tone(buzzer, 710);
+    delay(100);
+    noTone(buzzer);
+    delay(50);
+    tone(buzzer, 880);
+    delay(100);
+    noTone(buzzer);
+    delay(50);
+    tone(buzzer, 900);
+    delay(150);
+    noTone(buzzer);
+    delay(50);
+    tone(buzzer, 1000);
+    delay(300);
+    noTone(buzzer);
+    delay(100);
+    tone(buzzer, 880);
+    delay(200);
+    noTone(buzzer);
+    delay(100);
+    tone(buzzer, 1000);
+    delay(300);
+    noTone(buzzer);
+    delay(100);
 }
 bool ExisteNaArray(int atual,int valor){
     for(int x = 0 ;x < atual;x++){
@@ -246,7 +269,7 @@ void loop()
         if (lerEntrada() == 1)
         {
             tocarMusicaDeEspera();
-            estado = 4;
+            estado = 1;
         }
     }
     else if (estado == 1)
@@ -337,16 +360,13 @@ void loop()
         short respostaDaPergunta = perguntarParaJogador("O cr7 e o goat",2,1,true);
         if(respostaDaPergunta==0){
             PrintarDuasLinhas("Voce eh o cara ","todo mundo sabe",3000);
+            tocarMusicaDeEspera();
             PrintarDuasLinhas("que o messi eh o ","     GOAT!!!   ",3000);
+            tocarMusicaDeEspera();
         }else{
             PrintarDuasLinhas("Naoooooooooo ","Voce errou!",3000);
             PrintarDuasLinhas("Perdeu o jogo! ","MESSI EH O GOAT",3000);
         }
         estado=0;
     }
-    // lcd_1.setCursor(0, 1);
-    //  print the number of seconds since reset:
-    // lcd_1.print(seconds);
-    //delayMeu(1000); // Wait for 1000 millisecond(s)
-                 // seconds += 1;
 }
