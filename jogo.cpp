@@ -1,3 +1,4 @@
+
 #include <LiquidCrystal.h>
 
 volatile bool resetarVer = false;
@@ -14,8 +15,18 @@ char * perguntas[] = {"Sexta tem feira?",
 "Um float tem 64 bits?",
 "Tem classe em C?",
 "Tem classe em java?",
-"Tem gerenciador de pacote em C?",};
-short respostasPergunta[] = {1,2,2,1,2};
+"Tem gerenciador de pacote em C?",
+"O HTML e uma linguagem de marcacao?",
+"O Python e uma linguagem de script?",
+"Java e usado para desenvolvimento web?",
+"CSS serve para estilizar paginas web?",
+"Linux e um sistema operacional?",
+"O Excel e um software de planilhas?",
+"A linguagem C foi criada antes de Java?",
+"A memória RAM e volatil?",
+"O JavaScript e executado no servidor por padrao?",
+"O SQL e usado para criar sites?"};
+short respostasPergunta[] = {1,2,2,1,2,1,1,1,1,1,1,1,1,2,2};
 int perguntasEscolhidas[5];
 void delayMeu(int tempo){
     int timer = tempo;
@@ -31,6 +42,7 @@ void delayMeu(int tempo){
 }
 void tocarMusicaDeEspera()
 {
+
 }
 bool ExisteNaArray(int atual,int valor){
     for(int x = 0 ;x < atual;x++){
@@ -175,7 +187,7 @@ int lerEntradaPergunta()
 int perguntarParaJogador(char* pergunta,int respostaCorreta,int x,bool final){
     
         char timer[30],numeroDaQuestao[30];
-        printarLongo(pergunta,10);
+        printarLongo(pergunta,25);
         for(int y = 10 ; y> 0;y--){
             sprintf(timer,"  TIMER %d",y);
             if(!final){
@@ -225,7 +237,7 @@ void loop()
     {
         resetarVer = false;
         jogada = random(4);
-        gerarSequencia(5);
+        gerarSequencia(15);
         lcd_1.clear();
         lcd_1.setCursor(0, 0);
         lcd_1.print("Jogo Sabedoria");
@@ -322,7 +334,7 @@ void loop()
         }
         
     }else if(estado == 6){
-        short respostaDaPergunta = perguntarParaJogador("O cr7 é o goat",2,1,true);
+        short respostaDaPergunta = perguntarParaJogador("O cr7 e o goat",2,1,true);
         if(respostaDaPergunta==0){
             PrintarDuasLinhas("Voce eh o cara ","todo mundo sabe",3000);
             PrintarDuasLinhas("que o messi eh o ","     GOAT!!!   ",3000);
