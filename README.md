@@ -48,3 +48,16 @@ Inicialmente criei as variaveis globais, que serão utilizadas pelo código no d
 com a variavel `int estado = 0` sendo a mais importante para o funcionamento, sendo ela a responsavel para separar cada momento do jogo, `estado = 0` para quando o jogo está em espera, `estado = 1` para mostrar a sequencia, `estado = 2` para receber a sequencia que o jogador vai clickar, caso sucesso a variavel estado é incrementada e passa a valer 3, no `estado = 3` ele vai mostrar na tela Parabens e vai para o `estado = 4`, no qual vai printar no lcd que estamos começando a fase de perguntas, indo para o `estado = 5`, temos um for que vai percorrer a array de perguntas sorteadas (sorteada no estado 0), chamando então a função de perguntar e receber a resposta, no `estado = 6`, caso o jogador passe de fase, terá a pergunta final, e tambem o show das respostas
 
 ### Array das Perguntas
+
+Criei um banco de perguntas em uma array `char * perguntas[] = {
+'pergunta 1','pergunta 2'
+};`
+### Array das respostas das perguntas
+
+Para cada pergunta ela tem sua resposta, sem 1 para sim e 2 para não
+`short respostasPergunta[] = {1,2};`
+Essa array que tem como objetivo armazenar as resposta tem que ter o mesmo tamanho da array de perguntas, sendo 1 para 1, o código vai acessar por um ponteiro que está armazenada da array do sorteio das perguntas, ou seja, temo junto uma array `int perguntasEscolhidas[5];` que inicialmente não tem valor definido, sendo assim, definida no decorrer do código pela função chamada `voidgerarSequencia(int quantidadeDeQuestao)`, recebendo o total de questões no banco de questões(`char * perguntas[];`)
+
+### Variaveis de controle de sub-estados
+
+temos algumas variaveis que vão ser utilizadas no decorrer do código para ajudar no funcionamento do código, sendo criadas globalmente como `bool resetarVer`,`int ponteiroVerJogada`,`int jogada`
