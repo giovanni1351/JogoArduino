@@ -61,3 +61,43 @@ Essa array que tem como objetivo armazenar as resposta tem que ter o mesmo taman
 ### Variaveis de controle de sub-estados
 
 temos algumas variaveis que vão ser utilizadas no decorrer do código para ajudar no funcionamento do código, sendo criadas globalmente como `bool resetarVer`,`int ponteiroVerJogada`,`int jogada`
+
+-----------
+
+## Funcionalidades
+
+### Prints
+
+Temos 3 funçoes para mostrar texto no LCD, 2 funções para o LED e uma função para o Buzzer
+
+#### Prints no lcd
+Função para printar um texto que será mostrado de forma de scroll
+`void printarLongo(char *texto, int caracteres)`
+Função simples para printar uma linha apenas
+`void printar(char *texto, int caracteres, int lugar)`
+E uma função para mostrar na tela de lcd duas linhas 
+`void PrintarDuasLinhas(char *textoCima,char *textoBaixo,int TimerdelayMeu)`
+#### Acender o LED
+Nestas funções, cada uma respectivamente acende um led de sua respectiva cor, por um determinado tempo,(ela alem disso faz um som com o buzzer, diferentes entre si)
+`void AcenderledVermelho()`
+`void AcenderledVerde()`
+ela é utilizada em varios momentos do código, quando vc clicka em um botão, no jogo da memória e quando a sequencia é mostrada
+
+#### Tocar musica
+
+`void tocarMusicaDeEspera()`
+Função utilizada no inicio do jogo, quando é clickado o botão para se iniciar, e quando o jogador vence
+
+### Inputs
+
+Foi escolhido para esse jogo, o input do botão funcionar em funções, enquanto a função está em execução o programa está lendo o input do jogador
+
+#### Meu próprio delay
+
+Um dos maiores problemas que enfrentei foi para ler o botão de resetar enquanto estava no delay, por isso criei um delay que a cada 1 milisegundo ele vai testar o input, para assim não ter o problema do código realmente estar parado, por conta disso todos os delays do jogo é um `void delayMeu(int tempo)`
+
+#### Ler entrada
+
+temos duas funções,`int lerEntrada()` e `int lerEntradaPergunta()`, tendo um funcionamento parecido, porem uma lendo até o jogador realmente digitar algo, e a outra que vai ler apenas por 1 segundo.
+A função `int lerEntrada()` é utilizada para o inicio do jogo e para ler a sequencia memorizada pelo jogador, tendo em vista que ele pode levar o tempo que for para dizer o que foi memorizado. Ja a função  `int lerEntradaPergunta()` é utilizada apenas na entrada da resposta da pergunta, tendo em vista que temos um tempo determinado para responder, a função é chamada dentro de um loop junto de um contador de segundo, servindo para contar o tempo restante que o jogador tem para digitar sua resposta.
+
