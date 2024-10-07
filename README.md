@@ -71,7 +71,7 @@ temos algumas variaveis que vão ser utilizadas no decorrer do código para ajud
 
 ## Funcionalidades
 
-### Prints
+### Prints/ Outputs
 
 Temos 3 funçoes para mostrar texto no LCD, 2 funções para o LED e uma função para o Buzzer
 
@@ -93,7 +93,7 @@ ela é utilizada em varios momentos do código, quando vc clicka em um botão, n
 `void tocarMusicaDeEspera()`
 Função utilizada no inicio do jogo, quando é clickado o botão para se iniciar, e quando o jogador vence
 
-### Inputs
+### Entradas/Inputs
 
 Foi escolhido para esse jogo, o input do botão funcionar em funções, enquanto a função está em execução o programa está lendo o input do jogador
 
@@ -105,4 +105,10 @@ Um dos maiores problemas que enfrentei foi para ler o botão de resetar enquanto
 
 temos duas funções,`int lerEntrada()` e `int lerEntradaPergunta()`, tendo um funcionamento parecido, porem uma lendo até o jogador realmente digitar algo, e a outra que vai ler apenas por 1 segundo.
 A função `int lerEntrada()` é utilizada para o inicio do jogo e para ler a sequencia memorizada pelo jogador, tendo em vista que ele pode levar o tempo que for para dizer o que foi memorizado. Ja a função  `int lerEntradaPergunta()` é utilizada apenas na entrada da resposta da pergunta, tendo em vista que temos um tempo determinado para responder, a função é chamada dentro de um loop junto de um contador de segundo, servindo para contar o tempo restante que o jogador tem para digitar sua resposta.
+Na função de perguntar ao jogador, é utilizado a função `lerEntradaPergunta()`, que tem seu funcionamento por 1 segundo, então ela é chamada 10 vezes, tendo em vista que toda vez que finalizada é decrementado 1 do contador do cronometro, utilizada para o funcionamento da leitura e medição de tempo para o cronometro.
+
+Código comentado a baixo:
+
+``
+
 
