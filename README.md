@@ -107,11 +107,11 @@ temos duas funções,`int lerEntrada()` e `int lerEntradaPergunta()`, tendo um f
 A função `int lerEntrada()` é utilizada para o inicio do jogo e para ler a sequencia memorizada pelo jogador, tendo em vista que ele pode levar o tempo que for para dizer o que foi memorizado. Ja a função  `int lerEntradaPergunta()` é utilizada apenas na entrada da resposta da pergunta, tendo em vista que temos um tempo determinado para responder, a função é chamada dentro de um loop junto de um contador de segundo, servindo para contar o tempo restante que o jogador tem para digitar sua resposta.
 Na função de perguntar ao jogador, é utilizado a função `lerEntradaPergunta()`, que tem seu funcionamento por 1 segundo, então ela é chamada 10 vezes, tendo em vista que toda vez que finalizada é decrementado 1 do contador do cronometro, utilizada para o funcionamento da leitura e medição de tempo para o cronometro.
 
-#Código comentado a baixo:
+# Código comentado a baixo:
 
 --------------------------
 
-`
+```
 #include <LiquidCrystal.h>
 
 
@@ -716,6 +716,7 @@ void loop()
         }
         estado=0;
     }
-}`
+}
+```
 
 
