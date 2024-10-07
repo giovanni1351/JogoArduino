@@ -2,6 +2,10 @@
 ![image](https://github.com/user-attachments/assets/e3e3f16a-c050-4626-8d8f-068eaf153692)
 
 
+https://github.com/user-attachments/assets/ed05b06e-f933-4678-8756-ebbf0adab31e
+
+
+
 ## Jogo para arduino de quiz
 
 ### o jogo tem 3 etapas:
