@@ -107,6 +107,13 @@ temos duas funções,`int lerEntrada()` e `int lerEntradaPergunta()`, tendo um f
 A função `int lerEntrada()` é utilizada para o inicio do jogo e para ler a sequencia memorizada pelo jogador, tendo em vista que ele pode levar o tempo que for para dizer o que foi memorizado. Ja a função  `int lerEntradaPergunta()` é utilizada apenas na entrada da resposta da pergunta, tendo em vista que temos um tempo determinado para responder, a função é chamada dentro de um loop junto de um contador de segundo, servindo para contar o tempo restante que o jogador tem para digitar sua resposta.
 Na função de perguntar ao jogador, é utilizado a função `lerEntradaPergunta()`, que tem seu funcionamento por 1 segundo, então ela é chamada 10 vezes, tendo em vista que toda vez que finalizada é decrementado 1 do contador do cronometro, utilizada para o funcionamento da leitura e medição de tempo para o cronometro.
 
+
+# Conclusão
+
+O jogo feito em arduino foi um bom desafio, no qual consegui utilizar de minha experiencia na programação de uma forma criativa, utilizando conceitos de State Machines e de estruturas de dados para certos momentos, tive uma certa dificultade em entender o funcionamento do reset do jogador, que só foi conseguir arrumar com uma própria função de delay, ja que a interrupção não funcionava enquanto o jogador estava no delay default do arduino. 
+Utilizei a maquina de estados para me ajudar a fragmentar o meu código dentro da função loop, sendo assim, mais facil de gerenciar e debugar o código, ja que eu poderia ja iniciar o meu arduino no estado no qual eu estava programando. Os estados no quais tenho conhecimentos com experiencia anteriores programando jogos, a maquina de estados tem uma forma facil de abstrair o problema, ja que cada estado representa algo, o estado = 0 é o inicio, então eu só preciso atribuir a variavel 0 no estado para o jogo ja ir diretamente ao inicio, sendo muito simples navegar entre a funcionalidades, utilizei funções, que me facilitou muito na hora de escrever o código, me possibilitando criar facilmente o que eu queria, deixando um código mais limpo e facil de entender, ja que não precisava necessáriamente ficar o tempo todo criando um print do zero, criei 3 variações e pronto, ja consegui criar o I/O default do meu programa. Ponteiros para me ajudar a navegar nas verificações, assim como em estrutura de dados, em uma lista estática, onde se existe um ponteiro para o final, em meu código existe um ponteiro que está apontando para uma jogada atual, que o jogador deve fazer. 
+
+
 # Código comentado a baixo:
 
 --------------------------
